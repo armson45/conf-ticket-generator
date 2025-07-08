@@ -1,0 +1,99 @@
+:root {
+    --neutral-0: hsl(0, 0%, 100%);
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/assets/fonts/inconsolata-v36-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/assets/fonts/inconsolata-v36-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/assets/fonts/inconsolata-v36-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 800;
+    src: url('/assets/fonts/inconsolata-v36-latin-800.woff2') format('woff2');
+}
+
+
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100dvh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
