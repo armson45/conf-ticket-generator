@@ -1,0 +1,67 @@
+---
+interface Props {}
+---
+
+<section>
+    <form>
+        <div class="">
+            <label for="uploadavatar">Upload Avatar</label>
+            <div class="dropbox-zone">
+                <span class="upload-icon">
+                    <img
+                        src="/assets/images/icon-upload.svg"
+                        alt="Upload Icon"
+                    />
+                </span>
+                <p>Drag and drop or click to upload</p>
+            </div>
+        </div>
+        <div>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" />
+        </div>
+        <div>
+            <label for="email">Email Adress</label>
+            <input
+                type="text"
+                name="email"
+                id="email"
+                placeholder="example@email.com"
+            />
+        </div>
+        <div>
+            <label for="githubuser">Github Username</label>
+            <input
+                type="text"
+                name="githubuser"
+                id="githubuser"
+                placeholder="@yourusername"
+            />
+        </div>
+
+        <button type="submit">Generate My Ticket</button>
+    </form>
+</section>
+
+<style>
+    form {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    .upload-icon {
+        display: inline-block;
+        width: 60px;
+    }
+
+    .dropbox-zone {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5em;
+        background-color: hsla(0, 0%, 100%, 0.096);
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='18' ry='18' stroke='hsl(245, 15%, 58%)' stroke-width='3' stroke-dasharray='9' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
+        border-radius: 18px;
+    }
+</style>
