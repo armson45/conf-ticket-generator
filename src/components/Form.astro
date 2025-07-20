@@ -6,7 +6,7 @@ interface Props {}
     <form>
         <div>
             <label for="uploadavatar">Upload Avatar</label>
-            <div class="dropbox-zone">
+            <div class="dropbox-zone" tabindex="0">
                 <span class="upload-icon">
                     <img
                         src="/assets/images/icon-upload.svg"
@@ -66,7 +66,7 @@ interface Props {}
     .upload-icon {
         display: inline-block;
         width: 50px;
-        padding: .5em;
+        padding: 0.5em;
         border-radius: 12px;
         outline: 1px solid var(--neutral-500);
         background-color: hsla(0, 0%, 100%, 0.158);
@@ -77,6 +77,8 @@ interface Props {}
         align-items: center;
         gap: 0.5rem;
         margin-top: 0.75rem;
+        color: var(--neutral-300);
+        font-size: 12px;
 
         & > img {
             width: 20px;
@@ -84,6 +86,7 @@ interface Props {}
     }
 
     .dropbox-zone {
+        backdrop-filter: blur(2px);
         min-height: 150px;
         max-height: 175px;
         display: flex;
@@ -97,8 +100,18 @@ interface Props {}
         border-radius: 18px;
 
         p {
+            margin-top: 1rem;
             color: var(--neutral-300);
         }
+    }
+
+    .dropbox-zone:hover {
+        background-color: var(--neutral-150);
+    }
+
+    .dropbox-zone:focus-visible {
+        outline: 2px solid var(--neutral-300);
+        outline-offset: 2px;
     }
 
     .input-wrapper {
@@ -113,6 +126,36 @@ interface Props {}
             padding: 1em;
             border-radius: 0.75rem;
             color: var(--neutral-300);
+
+            backdrop-filter: blur(2px);
+        }
+
+        input::placeholder {
+            color: var(--neutral-300);
+        }
+    }
+
+    .input-wrapper input[type="text"]:hover {
+        background-color: var(--neutral-150);
+        cursor: pointer;
+    }
+
+    .input-wrapper input[type="text"]:focus {
+        outline: 2px solid var(--neutral-300);
+        outline-offset: 2px;
+    }
+
+    
+
+    @media (width >= 1024px) {
+        .btn-primary {
+            box-shadow: 0px 0px 0px var(--orange-500);
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--orange-700);
+            box-shadow: 0px 6px 0px var(--orange-500);
         }
     }
 </style>
