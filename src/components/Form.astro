@@ -2,9 +2,9 @@
 interface Props {}
 ---
 
-<section>
+<section class="form-wrapper">
     <form>
-        <div class="">
+        <div>
             <label for="uploadavatar">Upload Avatar</label>
             <div class="dropbox-zone">
                 <span class="upload-icon">
@@ -15,12 +15,16 @@ interface Props {}
                 </span>
                 <p>Drag and drop or click to upload</p>
             </div>
+            <small class="dropbox-hint">
+                <img src="/assets/images/icon-info.svg" alt="" />
+                Upload your photo (JPG or PNG, max size: 500KB).
+            </small>
         </div>
-        <div>
+        <div class="input-wrapper">
             <label for="fullname">Full Name</label>
             <input type="text" id="fullname" />
         </div>
-        <div>
+        <div class="input-wrapper">
             <label for="email">Email Adress</label>
             <input
                 type="text"
@@ -29,7 +33,7 @@ interface Props {}
                 placeholder="example@email.com"
             />
         </div>
-        <div>
+        <div class="input-wrapper">
             <label for="githubuser">Github Username</label>
             <input
                 type="text"
@@ -39,29 +43,76 @@ interface Props {}
             />
         </div>
 
-        <button type="submit">Generate My Ticket</button>
+        <button type="submit" class="btn btn-primary">Generate My Ticket</button
+        >
     </form>
 </section>
 
 <style>
+    .form-wrapper {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+    }
+
     form {
         display: flex;
         flex-flow: column nowrap;
+        gap: 1.5rem;
+        label {
+            font-weight: 500;
+        }
     }
 
     .upload-icon {
         display: inline-block;
-        width: 60px;
+        width: 50px;
+        padding: .5em;
+        border-radius: 12px;
+        outline: 1px solid var(--neutral-500);
+        background-color: hsla(0, 0%, 100%, 0.158);
+    }
+
+    .dropbox-hint {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+
+        & > img {
+            width: 20px;
+        }
     }
 
     .dropbox-zone {
+        min-height: 150px;
+        max-height: 175px;
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
+        margin-top: 0.75rem;
         padding: 1.5em;
-        background-color: hsla(0, 0%, 100%, 0.096);
+        background-color: var(--neutral-100);
         background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='18' ry='18' stroke='hsl(245, 15%, 58%)' stroke-width='3' stroke-dasharray='9' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
         border-radius: 18px;
+
+        p {
+            color: var(--neutral-300);
+        }
+    }
+
+    .input-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.75rem;
+
+        input[type="text"] {
+            outline: none;
+            background-color: var(--neutral-100);
+            border: 1px solid var(--neutral-500);
+            padding: 1em;
+            border-radius: 0.75rem;
+            color: var(--neutral-300);
+        }
     }
 </style>
