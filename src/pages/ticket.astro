@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const fullName = Astro.url.searchParams.get("fullname");
+const email = Astro.url.searchParams.get("email");
+const githubUser = Astro.url.searchParams.get("githubuser");
+---
+
+<Layout>
+  <h2>Congrats, <strong>{fullName}</strong>! Your ticket is ready.</h2>
+
+  <div class="ticket-details">
+    <p><strong>Nombre:</strong> {fullName}</p>
+    <p><strong>Email:</strong> {email}</p>
+    <p>
+      <strong>GitHub:</strong>
+      <a href=`https://github.com/${githubUser}`>@{githubUser}</a>
+    </p>
+  </div>
+</Layout>

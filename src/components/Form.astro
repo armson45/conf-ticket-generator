@@ -1,9 +1,10 @@
 ---
 import AvatarUpload from "./AvatarUpload.astro";
+import { isValidEmail } from "../utils/validations";
 ---
 
 <section class="form-wrapper">
-    <form class="form">
+    <form class="form" method="post" action="/api/generate-ticket">
         <AvatarUpload />
         <div class="input-wrapper">
             <label for="fullname">Full Name</label>
@@ -34,61 +35,68 @@ import AvatarUpload from "./AvatarUpload.astro";
 </section>
 
 <script>
-    const form = document.querySelector("form");
-    form?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(form));
-        validateInputFields(data);
-    });
+    // const form = document.querySelector("form");
+    // form?.addEventListener("submit", (e) => {
+    //     e.preventDefault();
+    //     const data = Object.fromEntries(new FormData(form));
+    //     validateInputFields(data);
+    // });
 
-    const regex =
-        "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$";
+    // const regex =
+    //     "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$";
 
-    let validateInputFields = ({ fullname, email, githubuser }: any) => {
-        const isValidEmail = new RegExp(regex).test(email);
+    // let validateInputFields = ({ fullname, email, githubuser }: any) => {
+    //     const isValidEmail = new RegExp(regex).test(email);
 
-        if (fullname == "") {
-            throwErrorMessage("Please enter your name!", "fullname");
-        }
-        if (!isValidEmail) {
-            throwErrorMessage("Please enter a valid email address", "email");
-        }
-        if (githubuser == "") {
-            throwErrorMessage(
-                "Please enter your GitHub username",
-                "githubuser",
-            );
-        }
-    };
+    //     if (fullname == "") {
+    //         throwErrorMessage("Please enter your name!", "fullname");
+    //     }
+    //     if (!isValidEmail) {
+    //         throwErrorMessage("Please enter a valid email address", "email");
+    //     }
+    //     if (githubuser == "") {
+    //         throwErrorMessage(
+    //             "Please enter your GitHub username",
+    //             "githubuser",
+    //         );
+    //     }
+    // };
 
-    let throwErrorMessage = (exception: string, where: any) => {
-        const errorMessageBox = document.createElement("div");
-        const img = `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="none"
-      viewBox="0 0 16 16"
-      ><path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"></path><path
-        fill="currentColor"
-        d="M8.004 10.462V7.596ZM8 5.57v-.042Z"></path><path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M8.004 10.462V7.596M8 5.569v-.042"></path></svg>`;
+    // let throwErrorMessage = (exception: string, where: any) => {
+    //     const errorMessageBox = document.createElement("div");
+    //     const img = `<svg
+    //   xmlns="http://www.w3.org/2000/svg"
+    //   width="16"
+    //   height="16"
+    //   fill="none"
+    //   viewBox="0 0 16 16"
+    //   ><path
+    //     stroke="currentColor"
+    //     stroke-linecap="round"
+    //     stroke-linejoin="round"
+    //     d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"></path><path
+    //     fill="currentColor"
+    //     d="M8.004 10.462V7.596ZM8 5.57v-.042Z"></path><path
+    //     stroke="currentColor"
+    //     stroke-linecap="round"
+    //     stroke-linejoin="round"
+    //     d="M8.004 10.462V7.596M8 5.569v-.042"></path></svg>`;
 
-        errorMessageBox.classList.add("error");
-        errorMessageBox.insertAdjacentHTML("afterbegin", img);
-        errorMessageBox.insertAdjacentHTML("beforeend", `${exception}`);
+    //     errorMessageBox.classList.add("error");
+    //     errorMessageBox.insertAdjacentHTML("afterbegin", img);
+    //     errorMessageBox.insertAdjacentHTML("beforeend", `${exception}`);
 
-        const inputField = document.querySelector(`input[name="${where}"]`) as HTMLInputElement;
-        inputField.style.border = "1px solid var(--orange-500)";
-        inputField?.insertAdjacentElement("afterend", errorMessageBox);
-    };
+    //     const inputField = document.querySelector(
+    //         `input[name="${where}"]`,
+    //     ) as HTMLInputElement;
+    //     inputField.style.border = "1px solid var(--orange-500)";
+    //     inputField?.insertAdjacentElement("afterend", errorMessageBox);
+
+    //     setTimeout(() => {
+    //         errorMessageBox.remove();
+    //         inputField.style.border = "initial";
+    //     }, 5000);
+    // };
 </script>
 
 <style>
@@ -111,7 +119,7 @@ import AvatarUpload from "./AvatarUpload.astro";
     .input-wrapper {
         display: flex;
         flex-flow: column nowrap;
-        gap: .75rem;
+        gap: 0.75rem;
 
         input[type="text"] {
             outline: none;
@@ -119,7 +127,7 @@ import AvatarUpload from "./AvatarUpload.astro";
             background-color: var(--neutral-100);
             border: 1px solid var(--neutral-500);
             padding: 1em;
-            border-radius: .75rem;
+            border-radius: 0.75rem;
             color: var(--neutral-300);
             backdrop-filter: blur(2px);
             font-size: 18px;
@@ -142,6 +150,15 @@ import AvatarUpload from "./AvatarUpload.astro";
     .input-wrapper input[type="text"]:focus {
         outline: 2px solid var(--neutral-300);
         outline-offset: 2px;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--neutral-100) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--neutral-100) inset !important;
+        transition: all 5000s ease-in-out 0s;
+        color: hsl(252, 6%, 83%) !important;
     }
 
     @media (width >= 1024px) {
