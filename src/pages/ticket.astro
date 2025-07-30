@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const avatar = Astro.url.searchParams.get("avatar");
 const fullName = Astro.url.searchParams.get("fullname");
 const email = Astro.url.searchParams.get("email");
 const githubUser = Astro.url.searchParams.get("githubuser");
@@ -10,6 +11,8 @@ const githubUser = Astro.url.searchParams.get("githubuser");
   <h2>Congrats, <strong>{fullName}</strong>! Your ticket is ready.</h2>
 
   <div class="ticket-details">
+    <img src={avatar} alt=`Avatar de ${fullName}` class="ticket-avatar" width="150"
+    height="150" />
     <p><strong>Nombre:</strong> {fullName}</p>
     <p><strong>Email:</strong> {email}</p>
     <p>

@@ -1,13 +1,27 @@
+---
+
+---
+
 <div>
   <label for="uploadavatar">Upload Avatar</label>
   <div class="dropbox-zone" tabindex="0">
-    <span class="upload-icon">
-      <img src="/assets/images/icon-upload.svg" alt="Upload Icon" />
-    </span>
-    <p>Drag and drop or click to upload</p>
+    <input type="file" name="avatar" id="avatar" />
+    <div class="avatar-placeholder">
+      <img
+        src="/assets/images/icon-upload.svg"
+        class="avatar-placeholder__image"
+        alt="Upload Icon"
+      />
+    </div>
+    <div class="configure-avatar">
+      <!-- <p>Drag and drop or click to upload</p> -->
+      <!-- MAKE STYLES FOR SECONDARY BUTTON AND THEN 
+          FUNCTIONALITIES FOR BUTTONS BELOW -->
+      <button type="button" class="btn btn-secondary">Remove image</button>
+      <button type="button" class="btn btn-secondary">Change image</button>
+    </div>
   </div>
   <small class="dropbox-hint">
-    <!-- <img src="/assets/images/icon-info.svg" alt="" /> -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -31,17 +45,90 @@
 </div>
 
 <script>
-  //validate and upload avatar here
+  const $dropboxZone = document.querySelector(".dropbox-zone");
+  const $inputFile = document.getElementById("avatar");
+  const $configureAvatar = document.querySelector(
+    ".configure-avatar",
+  ) as HTMLElement;
+  const $avatarImage = document.querySelector(
+    ".avatar-placeholder__image",
+  ) as HTMLImageElement;
+
+  $dropboxZone?.addEventListener("click", (e) => {
+    $inputFile?.click();
+  });
+
+  $inputFile?.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+
+    if (!target.files || target.files.length <= 0) {
+      alert("Error");
+      return;
+    }
+    //just to reset the author style
+    if (!$avatarImage.parentElement) {
+      alert("Hubo un problema al subir tu avatar.");
+      return;
+    }
+
+    if (!isValidFormat(target.files[0])) {
+      alert("Por favor, selecciona un formato válido");
+      return;
+    }
+
+    if (!isValidSize(target.files[0])) {
+      alert(`Actual size: ${Math.floor(target.files[0].size / 1024)}KB, but max is: 500KB`);
+      return;
+    }
+
+    $avatarImage.parentElement.style.padding = "0";
+    $avatarImage.src = URL.createObjectURL(target.files[0]);
+    $configureAvatar.innerHTML = `
+    <button type="button" class="btn btn-secondary">Remove image</button>
+    <button type="button" class="btn btn-secondary">Change image</button>
+    `;
+  });
+
+  const isValidFormat = (avatarImage: File): boolean => {
+    return (
+      avatarImage.type === "image/png" || avatarImage.type === "image/jpeg"
+    );
+  };
+
+  const isValidSize = (avatarImage: File): boolean => {
+    return Math.floor(avatarImage.size / 1024) <= 500;
+  };
 </script>
 
 <style>
-  .upload-icon {
+  #avatar {
+    display: none;
+  }
+
+  .configure-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  div :global(.btn-secondary) {
+    color: var(--neutral-300);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: var(--neutral-100);
+  }
+
+  .avatar-placeholder {
     display: inline-block;
     width: 50px;
+    height: 50px;
     padding: 0.5em;
     border-radius: 12px;
     outline: 1px solid var(--neutral-500);
     background-color: hsla(0, 0%, 100%, 0.158);
+    overflow: clip;
   }
 
   .dropbox-hint {
@@ -64,7 +151,8 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 12px;
     margin-top: 0.75rem;
     padding: 1.5em;
     background-color: var(--neutral-100);
@@ -72,8 +160,11 @@
     border-radius: 18px;
 
     p {
-      margin-top: 1rem;
       color: var(--neutral-300);
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 

@@ -3,6 +3,8 @@ dist/
 # generated types
 .astro/
 
+uploads
+
 data.txt
 .vs-code/
 

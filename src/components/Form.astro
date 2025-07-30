@@ -1,10 +1,14 @@
 ---
 import AvatarUpload from "./AvatarUpload.astro";
-import { isValidEmail } from "../utils/validations";
 ---
 
 <section class="form-wrapper">
-    <form class="form" method="post" action="/api/generate-ticket">
+    <form
+        class="form"
+        method="post"
+        action="/api/generate-ticket"
+        enctype="multipart/form-data"
+    >
         <AvatarUpload />
         <div class="input-wrapper">
             <label for="fullname">Full Name</label>
@@ -33,71 +37,6 @@ import { isValidEmail } from "../utils/validations";
         >
     </form>
 </section>
-
-<script>
-    // const form = document.querySelector("form");
-    // form?.addEventListener("submit", (e) => {
-    //     e.preventDefault();
-    //     const data = Object.fromEntries(new FormData(form));
-    //     validateInputFields(data);
-    // });
-
-    // const regex =
-    //     "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$";
-
-    // let validateInputFields = ({ fullname, email, githubuser }: any) => {
-    //     const isValidEmail = new RegExp(regex).test(email);
-
-    //     if (fullname == "") {
-    //         throwErrorMessage("Please enter your name!", "fullname");
-    //     }
-    //     if (!isValidEmail) {
-    //         throwErrorMessage("Please enter a valid email address", "email");
-    //     }
-    //     if (githubuser == "") {
-    //         throwErrorMessage(
-    //             "Please enter your GitHub username",
-    //             "githubuser",
-    //         );
-    //     }
-    // };
-
-    // let throwErrorMessage = (exception: string, where: any) => {
-    //     const errorMessageBox = document.createElement("div");
-    //     const img = `<svg
-    //   xmlns="http://www.w3.org/2000/svg"
-    //   width="16"
-    //   height="16"
-    //   fill="none"
-    //   viewBox="0 0 16 16"
-    //   ><path
-    //     stroke="currentColor"
-    //     stroke-linecap="round"
-    //     stroke-linejoin="round"
-    //     d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"></path><path
-    //     fill="currentColor"
-    //     d="M8.004 10.462V7.596ZM8 5.57v-.042Z"></path><path
-    //     stroke="currentColor"
-    //     stroke-linecap="round"
-    //     stroke-linejoin="round"
-    //     d="M8.004 10.462V7.596M8 5.569v-.042"></path></svg>`;
-
-    //     errorMessageBox.classList.add("error");
-    //     errorMessageBox.insertAdjacentHTML("afterbegin", img);
-    //     errorMessageBox.insertAdjacentHTML("beforeend", `${exception}`);
-
-    //     const inputField = document.querySelector(
-    //         `input[name="${where}"]`,
-    //     ) as HTMLInputElement;
-    //     inputField.style.border = "1px solid var(--orange-500)";
-    //     inputField?.insertAdjacentElement("afterend", errorMessageBox);
-
-    //     setTimeout(() => {
-    //         errorMessageBox.remove();
-    //         inputField.style.border = "initial";
-    //     }, 5000);
-    // };
-</script>
 
 <style>
     .form-wrapper {
@@ -136,6 +75,15 @@ import { isValidEmail } from "../utils/validations";
         input::placeholder {
             color: var(--neutral-300);
         }
+    }
+
+    .btn-primary {
+        font-size: 18px;
+        font-weight: 800;
+        background-color: var(--orange-500);
+        border-radius: 12px;
+        color: var(--neutral-900);
+        padding: 0.75em 1.5em;
     }
 
     .input-wrapper.error input[type="text"] {
