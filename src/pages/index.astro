@@ -13,7 +13,11 @@ import Form from "../components/Form.astro";
 </Layout>
 
 <script>
+	import { throwErrorMessage } from "../utils/ThrowErrorMessage";
+
 	const form = document.querySelector("form");
+	form?.reset();
+
 	form?.addEventListener("submit", (e) => {
 		e.preventDefault();
 		const data = Object.fromEntries(new FormData(form));
@@ -24,58 +28,35 @@ import Form from "../components/Form.astro";
 		"^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$";
 
 	let validateInputFields = ({ fullname, email, githubuser }: any) => {
-		const isValidEmail = new RegExp(regex).test(email);
-
-		// a solution but could improve
-
-		if (fullname == "") {
+		if (!fullname || fullname.trim() === "") {
 			throwErrorMessage("Please enter your name!", "fullname");
 		}
-		if (!isValidEmail) {
+		if (!isValidEmail(email)) {
 			throwErrorMessage("Please enter a valid email address", "email");
 		}
-		if (githubuser == "") {
+
+		if (!githubuser || githubuser.trim() === "") {
 			throwErrorMessage("Please enter your GitHub username", "githubuser");
 			return;
 		}
-
 		return form?.submit();
 	};
 
-	let throwErrorMessage = (exception: string, where: any) => {
-		const errorMessageBox = document.createElement("div");
-		const img = `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="none"
-      viewBox="0 0 16 16"
-      ><path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"></path><path
-        fill="currentColor"
-        d="M8.004 10.462V7.596ZM8 5.57v-.042Z"></path><path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M8.004 10.462V7.596M8 5.569v-.042"></path></svg>`;
+	const isValidEmail = (email: string): boolean => {
+		let pattern = new RegExp(regex);
 
-		errorMessageBox.classList.add("error");
-		errorMessageBox.insertAdjacentHTML("afterbegin", img);
-		errorMessageBox.insertAdjacentHTML("beforeend", `${exception}`);
-
-		const inputField = document.querySelector(
-			`input[name="${where}"]`,
-		) as HTMLInputElement;
-		inputField.style.border = "1px solid var(--orange-500)";
-		inputField?.insertAdjacentElement("afterend", errorMessageBox);
-
-		setTimeout(() => {
-			errorMessageBox.remove();
-			inputField.style.border = "initial";
-		}, 5000);
+		if (!email || email.trim() === "") {
+			return false;
+		}
+		if (!pattern.test(email)) {
+			return false;
+		}
+		if (email.includes(" ")) {
+			return false;
+		}
+		if (email.length < 5 || email.length > 254) {
+			return false;
+		}
 
 		return true;
 	};
