@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-export async function POST({ request, redirect }) {
+import { put } from '@vercel/blob';
+
+export async function POST({ request, redirect, cookies }) {
   const formData = await request.formData();
 
   const avatar = formData.get('avatar');
@@ -9,19 +11,19 @@ export async function POST({ request, redirect }) {
   const email = formData.get('email');
   const githubUser = formData.get('githubuser');
 
-  const nameAvatar = `${Date.now()}-${avatar.name}`;
+  const nameAvatar = `${Date.toString()}-${avatar.name}`;
 
-  const pathToImage = path.join("public", "uploads", nameAvatar);
-  const buffer = Buffer.from(await avatar.arrayBuffer());
-  await fs.writeFile(pathToImage, buffer);
-  const imageUrl = `/uploads/${nameAvatar}`
+  const { url } = await put(nameAvatar, avatar, {
+    access: "public"
+  });
 
-  const params = new URLSearchParams();
-  params.append('avatar', imageUrl);
-  params.append('fullname', fullName);
-  params.append('email', email);
-  params.append('githubuser', githubUser);
+  const imageUrl = url;
 
-
-  return redirect(`/ticket?${params.toString()}`);
+  cookies.set('ticket-data', JSON.stringify({
+    avatar: imageUrl,
+    fullName, email, githubUser
+  }), {
+    httpOnly: true,
+    path: '/ticket'
+  });
 }

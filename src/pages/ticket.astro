@@ -1,14 +1,46 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import type { APIContext } from "astro";
 
-const avatar = Astro.url.searchParams.get("avatar");
-const fullName = Astro.url.searchParams.get("fullname");
-const email = Astro.url.searchParams.get("email");
-const githubUser = Astro.url.searchParams.get("githubuser");
+// export function GET({ cookies }: APIContext) {
+//   const ticketData = cookies.get('ticket-data');
+//   const data = ticketData ? JSON.parse(ticketData.value) : null;
+
+//   cookies.delete('ticket-data');
+
+//   if (!data) {
+//     return new Response("No se encontraron datos del ticket.", { status: 404});
+//   }
+
+// }
+
+const ticketCookie = Astro.cookies.get("ticket-data")?.value;
+
+let ticketData = null;
+
+if (ticketCookie) {
+  try {
+    ticketData = JSON.parse(ticketCookie);
+  } catch (e) {
+    console.error("Error parsing ticket cookie", e);
+  }
+}
 ---
 
 <Layout>
-  <h2>Congrats, <strong>{fullName}</strong>! Your ticket is ready.</h2>
+  {
+    ticketData ? (
+      <>
+        <img src={ticketData.avatar} alt="Avatar" width="100" />
+        <p>Nombre: {ticketData.fullName}</p>
+        <p>Email: {ticketData.email}</p>
+        <p>GitHub: {ticketData.githubUser}</p>
+      </>
+    ) : (
+      <p>No hay datos del ticket.</p>
+    )
+  }
+  <!-- <h2>Congrats, <strong>{fullName}</strong>! Your ticket is ready.</h2>
 
   <div class="ticket-details">
     <img src={avatar} alt=`Avatar de ${fullName}` class="ticket-avatar" width="150"
@@ -19,5 +51,5 @@ const githubUser = Astro.url.searchParams.get("githubuser");
       <strong>GitHub:</strong>
       <a href=`https://github.com/${githubUser}`>@{githubUser}</a>
     </p>
-  </div>
+  </div> -->
 </Layout>
