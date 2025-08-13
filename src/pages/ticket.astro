@@ -11,7 +11,6 @@ import Layout from "../layouts/Layout.astro";
     We've emailed your ticket to <em class="speaker-email speaker-email__accent"
     ></em> and will send updates in the run up to the event.
   </p>
-
   <div class="ticket">
     <img src="/assets/images/pattern-ticket.svg" class="ticket-bg" alt="" />
     <div class="event-info">
@@ -27,11 +26,14 @@ import Layout from "../layouts/Layout.astro";
       </div>
       <div>
         <p class="speaker-name"></p>
-        <p class="speaker-github-username"></p>
+        <div class="icon-github">
+          <img src="assets/images/icon-github.svg" alt="" />
+          <p class="speaker-github-username"></p>
+        </div>
       </div>
     </div>
     <p class="ticket-code"></p>
-  </div>
+  </div>  
 </Layout>
 
 <script>
@@ -119,17 +121,20 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .ticket {
+    margin-inline: auto;
     margin-top: 10%;
     z-index: 1;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
     max-width: 600px;
-    height: 160px;
-    max-height: 280px;
     padding-block: 1.2rem;
     padding-inline: 1rem;
     position: relative;
+
+    @media (width >= 768px) {
+      height: 280px;
+    }
   }
 
   .event-info {
@@ -146,7 +151,6 @@ import Layout from "../layouts/Layout.astro";
     & h3 {
       font-size: 24px;
       line-height: 1;
-
       letter-spacing: -1px;
     }
 
@@ -185,7 +189,7 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .speaker-github-username::before {
-      content: url("assets/images/icon-github.svg");
+      content: url("/assets/images/icon-github.svg");
       position: relative;
       top: 5px;
       margin-right: 5px;
@@ -193,7 +197,6 @@ import Layout from "../layouts/Layout.astro";
     }
 
     img {
-      /* aspect-ratio: 3/4; */
       width: 45px;
     }
   }
@@ -207,7 +210,57 @@ import Layout from "../layouts/Layout.astro";
     z-index: 5;
   }
 
-  img {
-    width: 40px;
+  @media (width >= 768px) {
+    .ticket {
+      padding: 2.5rem;
+    }
+
+    h2 {
+      font-size: 60px;
+      letter-spacing: -1px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .confirmation-paragraph {
+      font-size: 24px;
+      width: 40ch;
+      margin-inline: auto;
+      line-height: 1.2;
+    }
+
+    .event-info {
+      & img {
+        width: 40px;
+      }
+
+      & h3 {
+        font-size: 40px;
+      }
+
+      & p {
+        line-height: 1.2;
+        font-size: 18px;
+      }
+    }
+
+    .speaker-info {
+      img {
+        width: 80px;
+      }
+
+      .speaker-name {
+        font-size: 30px;
+      }
+      .speaker-github-username {
+        font-size: 20px;
+        margin-top: 8px;
+        line-height: 1.2;
+      }
+    }
+
+    .ticket-code {
+      font-size: 30px;
+    }
   }
 </style>
