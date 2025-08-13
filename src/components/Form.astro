@@ -3,12 +3,7 @@ import AvatarUpload from "./AvatarUpload.astro";
 ---
 
 <section class="form-wrapper">
-    <form
-        class="form"
-        method="post"
-        action="/api/generate-ticket"
-        enctype="multipart/form-data"
-    >
+    <form class="form" method="post" action="/ticket">
         <AvatarUpload />
         <div class="input-wrapper">
             <label for="fullname">Full Name</label>
@@ -33,8 +28,7 @@ import AvatarUpload from "./AvatarUpload.astro";
             />
         </div>
 
-        <button type="submit" class="btn btn-primary">Generate My Ticket</button
-        >
+        <button type="submit" class="btn btn-primary">Generate My Ticket</button>
     </form>
 </section>
 

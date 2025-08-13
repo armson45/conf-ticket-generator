@@ -100,6 +100,8 @@
       return;
     }
 
+    getBase64Image(target.files[0]);
+
     $avatarImage.parentElement.style.padding = "0";
     $avatarImage.src = URL.createObjectURL(target.files[0]);
     ll.style.setProperty("display", "none");
@@ -132,6 +134,17 @@
     $avatarImage.src = "/assets/images/icon-upload.svg";
     $configureAvatar.style.setProperty("display", "none");
     ll.style.setProperty("display", "block");
+  };
+
+  const getBase64Image = (avatarImage: File) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      if (typeof reader.result === 'string') {
+        localStorage.setItem("avatarImage", reader.result);
+      }
+    });
+
+    reader.readAsDataURL(avatarImage);
   };
 </script>
 

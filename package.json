@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@astrojs/vercel": "^8.2.3",
-    "@vercel/blob": "^1.1.1",
     "astro": "^5.11.0",
     "npkill": "^0.12.2"
   }

@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Form from "../components/Form.astro";
-
 ---
 
 <Layout pageTitle="Inicio">
@@ -9,8 +8,6 @@ import Form from "../components/Form.astro";
 		<h1>Your Journey to Coding Conf 2025 Starts Here!</h1>
 		<p>Secure your spot at next year's biggest coding conference.</p>
 	</div>
-
-	<a href="/ticket/">aaaaaaaaaaaaa</a>
 
 	<Form />
 </Layout>
@@ -20,20 +17,27 @@ import Form from "../components/Form.astro";
 
 	const form = document.querySelector("form");
 	form?.reset();
+	localStorage.removeItem("avatarImage");
+	localStorage.removeItem("user-data");
 
 	form?.addEventListener("submit", (e) => {
 		e.preventDefault();
 		const data = Object.fromEntries(new FormData(form));
-		
+
 		if (!validateInputFields(data)) {
 			return;
 		}
-		return form?.submit();
-	});
 
+		localStorage.setItem("user-data", JSON.stringify(data));
+		return form.submit();
+	});
 </script>
 
 <style>
+	#routeticket {
+		color: white;
+	}
+
 	.main-title {
 		text-wrap: balance;
 		text-align: center;
