@@ -27,9 +27,12 @@ export function throwErrorMessage(message: string, element: string) {
   
   // const inputField = document.querySelector(`input[name="${element}"`) as HTMLInputElement;
   inputField?.insertAdjacentElement("afterend", errorMessageContainer);
+  inputField.style.setProperty("background-color", "var(--orange-750");
 
   setTimeout(() => {
     errorMessageContainer.remove();
     inputField.style.border = "initial";
+    inputField.style.setProperty("background-color", "var(--neutral-100)");
+
   }, 5000);
 }

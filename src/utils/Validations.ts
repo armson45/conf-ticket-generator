@@ -6,7 +6,8 @@ const regex =
 export function validateInputFields({avatar, fullname, email, githubuser}: any): boolean {
   
   if (!avatar || avatar.name.trim() === "") {
-    throwErrorMessage("Please upload a fking image", "dropbox-zone");
+    // sorry:)
+    throwErrorMessage("Please upload a image", "dropbox-zone");
   }
   if (!fullname || fullname.trim() === "") {
     throwErrorMessage("Please enter your name!", "fullname");
@@ -40,4 +41,37 @@ function isValidEmail(email: string):boolean {
   }
 
   return true;
+}
+
+export function isValidAvatarFile(file: File): boolean {
+
+  if(!file) return false;
+
+  if (!isValidFormat(file)) {
+    throwErrorMessage(
+      `You should upload a PNG/JPG image file, yours is: ${file.type}`,
+      "dropbox-zone",
+    );
+    return false;
+  }
+
+  if (!isValidSize(file)) {
+    throwErrorMessage(
+      `File too large. Please upload a photo under 500KB.`,
+      "dropbox-zone",
+    );
+    return false;
+  }
+  
+  return true;
+}
+
+export function isValidFormat(avatarImage: File):boolean {
+  return (
+    avatarImage.type === "image/png" || avatarImage.type === "image/jpeg"
+  );
+};
+
+export function isValidSize(avatarImage: File):boolean {
+  return Math.floor(avatarImage.size / 1024) <= 500;
 }
