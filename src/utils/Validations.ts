@@ -3,12 +3,7 @@ import { throwErrorMessage } from "../utils/ThrowErrorMessage";
 const regex =
   "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$";
 
-export function validateInputFields({avatar, fullname, email, githubuser}: any): boolean {
-  
-  if (!avatar || avatar.name.trim() === "") {
-    // sorry:)
-    throwErrorMessage("Please upload a image", "dropbox-zone");
-  }
+export function validateInputFields({fullname, email, githubuser}: any): boolean {
   if (!fullname || fullname.trim() === "") {
     throwErrorMessage("Please enter your name!", "fullname");
   }
